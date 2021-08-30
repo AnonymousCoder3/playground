@@ -1,0 +1,103 @@
+swagger: "2.0"
+info:
+  title: Valet Parking
+  description: API for valet Parking
+  version: 1.0.0
+host: localhost:3000
+basePath: /
+schemes:
+  - http
+paths:
+  /vehicles:
+    get:
+      description: Returns a list of checked in Vehicles.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          
+    post:
+      description: Check in vehicles by providing necessary details.
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name : details
+          in : body
+          required: true
+          schema:
+            $ref: '#/definitions/Vehicles'
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+            properties:
+              "status":
+                type: string
+              
+    delete:
+      description: check out delete function.
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: vehicleNumber
+          in : body
+          required: true
+          schema:
+            $ref: '#/definitions/VehicleNumber'
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              "cost":
+                type: integer
+              "duration":
+                type: integer
+              
+  /vehicles/{vehicleNumber}:
+    get:
+      description: find a particular vehicle.
+      parameters:
+        - name: vehicleNumber
+          in : path
+          type : string
+          required : true
+      responses:
+        200:
+          description: success
+          schema:
+            type: object
+            properties:
+              "cost":
+                type: integer
+              "duration":
+                type: integer
+                
+definitions:
+  Vehicles:
+    type: object
+    properties:
+      vehicleNumber:
+        type: string
+      vehicleModel:
+        type: string
+      vehicleType:
+        type: string
+      phoneNumber:
+        type: number
+      customerName:
+        type: string
+  VehicleNumber:
+    type: object
+    properties:
+      vehicleNumber:
+        type: string
+    
+    
